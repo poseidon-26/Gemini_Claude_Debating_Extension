@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Agent Debate</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Multi-Agent Debate</h1>
+    </header>
+
+    <div id="setup-view" class="view active">
+      <textarea id="query-input" placeholder="Enter your query for the debate..."></textarea>
+      
+      <div class="context-section">
+        <label>
+          <input type="checkbox" id="use-context-cb"> Provide local context files
+        </label>
+        <button id="select-dir-btn" style="display: none;">Select Folder</button>
+        <span id="selected-dir-info"></span>
+      </div>
+
+      <div class="context-section">
+        <label>
+          <input type="checkbox" id="expect-artifact-cb"> Expect an artifact/document output
+        </label>
+      </div>
+
+      <button id="start-btn" class="primary-btn">Start Debate</button>
+    </div>
+
+    <div id="pre-flight-view" class="view">
+      <h2>Recommended Settings</h2>
+      <p>The models recommend the following configuration for this query:</p>
+      <div class="output-box">
+        <strong>Gemini:</strong> Gemini Advanced / 1.5 Pro<br/>
+        <strong>Claude:</strong> Claude 3.5 Sonnet
+      </div>
+      <div class="pause-actions">
+        <button id="approve-pre-flight-btn" class="primary-btn">Approve & Start</button>
+        <button id="cancel-pre-flight-btn" class="danger-btn">Cancel</button>
+      </div>
+    </div>
+
+    <div id="active-view" class="view">
+      <div class="status-header">
+        <h2>Debate In Progress</h2>
+        <span id="status-indicator">Initializing...</span>
+      </div>
+      
+      <div class="turn-counter">
+        <p>Turn: <span id="turn-count">0</span> / 12</p>
+      </div>
+
+      <div class="actions">
+        <button id="pause-btn">Pause</button>
+      </div>
+    </div>
+    
+    <div id="pause-modal" class="modal">
+      <div class="modal-content">
+        <h3>Debate Paused</h3>
+        <p>What would you like to do?</p>
+        <textarea id="redirect-input" placeholder="Optional: Provide redirection instructions..."></textarea>
+        <div class="pause-actions">
+          <button id="resume-btn" class="primary-btn">Continue</button>
+          <button id="redirect-btn" class="primary-btn">Redirect</button>
+          <button id="abort-btn" class="danger-btn">Abort (To Synthesis)</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="failsafe-modal" class="modal">
+      <div class="modal-content">
+        <h3>Debate Cap Reached</h3>
+        <p>The debate has reached the failsafe turn limit without converging.</p>
+        <div class="pause-actions">
+          <button id="failsafe-continue-btn" class="primary-btn">Continue (+6 turns)</button>
+          <button id="failsafe-stop-btn" class="danger-btn">Stop (To Synthesis)</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="context-limit-modal" class="modal">
+      <div class="modal-content">
+        <h3>Context Limit Approaching</h3>
+        <p>The conversation is getting long. Would you like to summarize the debate so far and continue in a fresh thread?</p>
+        <div class="pause-actions">
+          <button id="context-compress-btn" class="primary-btn">Yes, compress & restart</button>
+          <button id="context-abort-btn" class="danger-btn">No, stop here</button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="synthesis-view" class="view">
+      <h2>Synthesis Output</h2>
+      <div id="synthesis-content" class="output-box"></div>
+      <button id="new-debate-btn">New Debate</button>
+    </div>
+
+  </div>
+  <script type="module" src="./popup.ts"></script>
+</body>
+</html>

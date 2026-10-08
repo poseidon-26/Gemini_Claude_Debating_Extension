@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "Multi-Agent Debate",
+  "version": "1.0.0",
+  "description": "Automated structured debate between Google Gemini and Anthropic Claude.",
+  "action": {
+    "default_popup": "src/popup/index.html"
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/geminiAdapter.ts-6sAgwz0X.js"
+      ],
+      "matches": [
+        "*://gemini.google.com/*"
+      ]
+    },
+    {
+      "js": [
+        "assets/claudeAdapter.ts-CaH4xhqD.js"
+      ],
+      "matches": [
+        "*://claude.ai/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "scripting",
+    "tabs",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://gemini.google.com/*",
+    "*://claude.ai/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://gemini.google.com/*"
+      ],
+      "resources": [
+        "assets/geminiAdapter.ts-6sAgwz0X.js"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "*://claude.ai/*"
+      ],
+      "resources": [
+        "assets/claudeAdapter.ts-CaH4xhqD.js"
+      ],
+      "use_dynamic_url": false
+    }
+  ]
+}
